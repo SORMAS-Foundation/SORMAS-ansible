@@ -1,7 +1,7 @@
 ### Sormas variables ###
 
-# Hostname and url of the application
-host_name: test-ubuntu.sormas.test.box
+# Domain and url of the application
+domain_name: test-ubuntu.sormas.test.box
 
 # The default values for the map section
 latitude: 0
@@ -26,3 +26,6 @@ docker_package: "docker-{{ docker_edition }}"
 
 # A list of users who will be added to the docker group.
 docker_users: []
+
+### LetsEncrypt variables ###
+letsencrypt_email: root@localhost

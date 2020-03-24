@@ -1,6 +1,6 @@
 - name: Set hostname
   hostname:
-    name: '{{ host_name }}'
+    name: '{{ domain_name }}'
 
 - name: Install git-core
   package:
@@ -17,7 +17,7 @@
   lineinfile:
     path: /root/sormas-docker/.env
     regexp: '^SORMAS_SERVER_URL='
-    line: 'SORMAS_SERVER_URL={{ host_name }}'
+    line: 'SORMAS_SERVER_URL={{ domain_name }}'
   
 - name: Replace SORMAS_PATH in .env with correct domain
   lineinfile:
@@ -36,28 +36,22 @@
     path: /root/sormas-docker/.env
     regexp: '^LONGITUDE='
     line: 'LONGITUDE={{ longitude }}'
-  
-- shell: "cat /root/sormas-docker/.env | grep SORMAS_VERSION |  sed -r 's/^SORMAS_VERSION=//'"
-  register: sormas_version
-
-- set_fact:
-    sormas_version: "{{ sormas_version.stdout }}"
 
 - name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
   openssl_privatekey:
-    path: '/root/sormas-docker/apache2/certs/{{ host_name }}.key'      
+    path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.key'      
 
 - name: Generate an OpenSSL Certificate Signing Request
   openssl_csr:
-    path: '/root/sormas-docker/apache2/certs/{{ host_name }}.csr'
-    privatekey_path: '/root/sormas-docker/apache2/certs/{{ host_name }}.key'
-    common_name: '{{ host_name }}'     
+    path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.csr'
+    privatekey_path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.key'
+    common_name: '{{ domain_name }}'     
   
 - name: Generate a Self Signed OpenSSL certificate
   openssl_certificate:
-    path: '/root/sormas-docker/apache2/certs/{{ host_name }}.crt'
-    privatekey_path: '/root/sormas-docker/apache2/certs/{{ host_name }}.key'
-    csr_path: '/root/sormas-docker/apache2/certs/{{ host_name }}.csr'
+    path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.crt'
+    privatekey_path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.key'
+    csr_path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.csr'
     provider: selfsigned
     
 - name: Run docker-compose
