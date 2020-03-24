@@ -28,4 +28,10 @@ docker_package: "docker-{{ docker_edition }}"
 docker_users: []
 
 ### LetsEncrypt variables ###
+
+# Use of LetsEncrypt or not (mutually exclusive with selfsigned_cert_generation)
+use_letsencrypt: false
+# Ift your sormas server is behind a reverse proxy, set this to true (mutually exclusive with use_letsencrypt)
+selfsigned_cert_generation: true
+# Email-address for LetsEncrypt
 letsencrypt_email: root@localhost

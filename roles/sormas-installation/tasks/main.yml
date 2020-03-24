@@ -39,13 +39,15 @@
 
 - name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
   openssl_privatekey:
-    path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.key'      
+    path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.key'
+  when: not use_letsencrypt and selfsigned_cert_generation
 
 - name: Generate an OpenSSL Certificate Signing Request
   openssl_csr:
     path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.csr'
     privatekey_path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.key'
-    common_name: '{{ domain_name }}'     
+    common_name: '{{ domain_name }}'
+  when: not use_letsencrypt and selfsigned_cert_generation    
   
 - name: Generate a Self Signed OpenSSL certificate
   openssl_certificate:
@@ -53,9 +55,10 @@
     privatekey_path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.key'
     csr_path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.csr'
     provider: selfsigned
+  when: not use_letsencrypt and selfsigned_cert_generation    
     
-- name: Run docker-compose
-  docker_compose:
-    project_src: /root/sormas-docker
-#        build: yes
-    pull: yes
+# - name: Run docker-compose
+#   docker_compose:
+#     project_src: /root/sormas-docker
+# #        build: yes
+#     pull: yes
