@@ -1,9 +1,14 @@
-# sormas variables
-host_name: test-ubuntu.sormas.test.box
-latitude: 53
-longitude: 10
+### Sormas variables ###
 
-# geerlingguy.pip variables
+# Hostname and url of the application
+host_name: test-ubuntu.sormas.test.box
+
+# The default values for the map section
+latitude: 0
+longitude: 0
+
+### geerlingguy.pip variables ###
+
 pip_papackge: python-pip
 pip_executable: pip
 pip_install_packages:
@@ -11,3 +16,13 @@ pip_install_packages:
     version: "1.24"
   - name: cryptography
   - name: pyopenssl
+
+
+### geerlingguy.docker variables ###
+
+# Edition can be one of: 'ce' (Community Edition) or 'ee' (Enterprise Edition).
+docker_edition: 'ce'
+docker_package: "docker-{{ docker_edition }}"
+
+# A list of users who will be added to the docker group.
+docker_users: []
