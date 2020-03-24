@@ -1,0 +1,13 @@
+# sormas variables
+host_name: test-ubuntu.sormas.test.box
+latitude: 53
+longitude: 10
+
+# geerlingguy.pip variables
+pip_papackge: python-pip
+pip_executable: pip
+pip_install_packages:
+  - name: docker-compose
+    version: "1.24"
+  - name: cryptography
+  - name: pyopenssl

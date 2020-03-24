@@ -1,0 +1,67 @@
+- name: Set hostname
+  hostname:
+    name: '{{ host_name }}'
+
+- name: Install git-core
+  package:
+    name: git-core
+    state: latest       
+
+- name: Clone the Code repository to the remote host.
+  git:
+      repo: "https://github.com/hzi-braunschweig/SORMAS-Docker.git"
+      dest: /root/sormas-docker
+      force: yes
+
+- name: Replace SORMAS_SERVER_URL in .env with correct domain
+  lineinfile:
+    path: /root/sormas-docker/.env
+    regexp: '^SORMAS_SERVER_URL='
+    line: 'SORMAS_SERVER_URL={{ host_name }}'
+  
+- name: Replace SORMAS_PATH in .env with correct domain
+  lineinfile:
+    path: /root/sormas-docker/.env
+    regexp: '^SORMAS_PATH='
+    line: 'SORMAS_PATH=/var/lib/docker'
+  
+- name: Replace LATITUDE in .env with correct latitude
+  lineinfile:
+    path: /root/sormas-docker/.env
+    regexp: '^LATITUDE='
+    line: 'LATITUDE={{ latitude }}'
+  
+- name: Replace LONGITUDE in .env with correct longitude
+  lineinfile:
+    path: /root/sormas-docker/.env
+    regexp: '^LONGITUDE='
+    line: 'LONGITUDE={{ longitude }}'
+  
+- shell: "cat /root/sormas-docker/.env | grep SORMAS_VERSION |  sed -r 's/^SORMAS_VERSION=//'"
+  register: sormas_version
+
+- set_fact:
+    sormas_version: "{{ sormas_version.stdout }}"
+
+- name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
+  openssl_privatekey:
+    path: '/root/sormas-docker/apache2/certs/{{ host_name }}.key'      
+
+- name: Generate an OpenSSL Certificate Signing Request
+  openssl_csr:
+    path: '/root/sormas-docker/apache2/certs/{{ host_name }}.csr'
+    privatekey_path: '/root/sormas-docker/apache2/certs/{{ host_name }}.key'
+    common_name: '{{ host_name }}'     
+  
+- name: Generate a Self Signed OpenSSL certificate
+  openssl_certificate:
+    path: '/root/sormas-docker/apache2/certs/{{ host_name }}.crt'
+    privatekey_path: '/root/sormas-docker/apache2/certs/{{ host_name }}.key'
+    csr_path: '/root/sormas-docker/apache2/certs/{{ host_name }}.csr'
+    provider: selfsigned
+    
+- name: Run docker-compose
+  docker_compose:
+    project_src: /root/sormas-docker
+#        build: yes
+    pull: yes

@@ -1,0 +1,9 @@
+---
+- hosts: sormas
+  become: yes
+  vars_files:
+    - vars/vars.yml
+  roles:
+    - geerlingguy.docker
+    - geerlingguy.pip
+    - sormas-installation
