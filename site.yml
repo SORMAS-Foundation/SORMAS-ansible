@@ -4,6 +4,6 @@
   vars_files:
     - vars/vars.yml
   roles:
-#    - geerlingguy.docker
-#    - geerlingguy.pip
+    - geerlingguy.docker
+    - geerlingguy.pip
     - sormas-installation
