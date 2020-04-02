@@ -55,7 +55,7 @@
     privatekey_path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.key'
     csr_path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.csr'
     provider: selfsigned
-  when: not use_letsencrypt and selfsigned_cert_generation    
+  when: not use_letsencrypt and selfsigned_cert_generation
     
 # - name: Run docker-compose
 #   docker_compose:

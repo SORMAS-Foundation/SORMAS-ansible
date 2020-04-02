@@ -6,4 +6,5 @@
   roles:
     - geerlingguy.docker
     - geerlingguy.pip
-    - sormas-installation
+    - { role: "letsencrypt", when: use_letsencrypt }
+    - sormas-installation    
