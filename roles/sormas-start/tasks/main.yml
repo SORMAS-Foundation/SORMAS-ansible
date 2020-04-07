@@ -3,3 +3,21 @@
   docker_compose:
     project_src: /root/sormas-docker
     pull: yes
+
+- name: Copy host.conf.j2 to LetsEncrypt volume
+  template:
+    src: host.conf.j2
+    dest: '/var/lib/docker/letsencrypt-config/nginx/proxy-confs/{{ domain_name }}.conf'
+
+- name: Include new config to default config
+  lineinfile:
+    path: '/var/lib/docker/letsencrypt-config/nginx/site-confs/default'
+    regexp: '^include /config/nginx/proxy-confs/'
+    line: 'include /config/nginx/proxy-confs/{{ domain_name }}.conf'
+
+- name: Restart letsencrypt service to apply changes
+  docker_compose:
+    project_src: /root/sormas-docker
+    services: letsencrypt
+    state: present
+    restarted: yes
