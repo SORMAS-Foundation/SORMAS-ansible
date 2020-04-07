@@ -34,15 +34,9 @@ docker_users: []
 
 ### LetsEncrypt variables ###
 
-# Use of LetsEncrypt or not (mutually exclusive with selfsigned_cert_generation)
-use_letsencrypt: false
-# Ift your sormas server is behind a reverse proxy, set this to true (mutually exclusive with use_letsencrypt)
+# Use of LetsEncrypt container on the same host (will issue and renew letsencrypt certificate for your domain) that will act as a reverse proxy.
+use_letsencrypt: true
+# If your sormas server is behind a reverse proxy or if you use the LetsEncrypt container set this to true.
 selfsigned_cert_generation: true
 # Email-address for LetsEncrypt
 acme_email: root@localhost
-# Certification variables
-letsencrypt_dir: /root/sormas-docker/apache2/certs
-#letsencrypt_keys_dir: /root/sormas-docker/apache2/certs
-#letsencrypt_csrs_dir: /root/sormas-docker/apache2/certs
-#letsencrypt_certs_dir: /root/sormas-docker/apache2/certs
-letsencrypt_account_key: /root/sormas-docker/apache2/certs/account.key
