@@ -13,7 +13,7 @@
   lineinfile:
     path: '/var/lib/docker/letsencrypt-config/nginx/site-confs/default'
     regexp: '^include /config/nginx/proxy-confs/'
-    line: 'include /config/nginx/proxy-confs/{{ domain_name }}.conf'
+    line: 'include /config/nginx/proxy-confs/{{ domain_name }}.conf;'
 
 - name: Restart letsencrypt service to apply changes
   docker_compose:
@@ -21,3 +21,9 @@
     services: letsencrypt
     state: present
     restarted: yes
+
+- name: Create pem file
+  shell: docker-compose exec letsencrypt /bin/sh -c "openssl dhparam -out /dockerconfig/nginx/dhparams.pem 2048"
+  args:
+    chdir: /root/sormas-docker
+    

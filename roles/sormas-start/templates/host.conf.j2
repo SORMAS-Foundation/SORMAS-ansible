@@ -30,8 +30,8 @@ server {
     add_header X-Content-Type-Options nosniff;
 
     
-    access_log  /config/log/nginx/access.log  main;
-    error_log   /config/log/nginx/error.log crit;
+#    access_log  /config/log/nginx/access.log  main;
+#    error_log   /config/log/nginx/error.log crit;
 
     location / {
        proxy_pass      https://apache2:443;
