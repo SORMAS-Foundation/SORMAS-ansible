@@ -2,23 +2,23 @@
   blockinfile:
     path: /root/sormas-docker/docker-compose.yml
     block: |2
-  letsencrypt:
-    image: linuxserver/letsencrypt
-    container_name: letsencrypt
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/London
-      - URL={{ domain_name }}
-      - SUBDOMAINS=www,
-      - VALIDATION=http
-      - EMAIL={{ acme_email }} #optional
-      - DHLEVEL=2048 #optional
-      - ONLY_SUBDOMAINS=false #optional
-      - STAGING=false #optional
-    volumes:
-      - /var/lib/docker/letsencrypt-config:/config
-    ports:
-      - 443:443
-      - 80:80
-    restart: unless-stopped
+      letsencrypt:
+        image: linuxserver/letsencrypt
+        container_name: letsencrypt
+        environment:
+          - PUID=1000
+          - PGID=1000
+          - TZ=Europe/London
+          - URL={{ domain_name }}
+          - SUBDOMAINS=www,
+          - VALIDATION=http
+          - EMAIL={{ acme_email }} #optional
+          - DHLEVEL=2048 #optional
+          - ONLY_SUBDOMAINS=false #optional
+          - STAGING=false #optional
+        volumes:
+          - /var/lib/docker/letsencrypt-config:/config
+        ports:
+          - 443:443
+          - 80:80
+        restart: unless-stopped
