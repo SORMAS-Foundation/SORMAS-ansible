@@ -1,4 +1,13 @@
-- name: Insert/Update "Match User" configuration block in /etc/ssh/sshd_config
+- name: Remove port mapping for apache2
+  lineinfile:
+    path: /root/sormas-docker/docker-compose.yml
+    regexp: '"{{ item }}:{{ item }}"'
+    line: '      - {{ item }}'
+  with_items:
+    - 80
+    - 443 
+
+- name: Insert letsencrypt configuration block docker-compose.yml
   blockinfile:
     path: /root/sormas-docker/docker-compose.yml
     block: |2
