@@ -20,6 +20,7 @@ pip_install_packages:
   - name: docker-compose
     version: "1.24"
   - name: cryptography
+    state: latest
   - name: pyopenssl
 
 

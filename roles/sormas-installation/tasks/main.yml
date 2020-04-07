@@ -41,6 +41,7 @@
 - name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
   openssl_privatekey:
     path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.key'
+    select_crypto_backend: pyopenssl
   when: selfsigned_cert_generation
 
 - name: Generate an OpenSSL Certificate Signing Request
