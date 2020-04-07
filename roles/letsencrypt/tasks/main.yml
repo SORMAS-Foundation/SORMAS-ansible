@@ -10,7 +10,6 @@
           - PGID=1000
           - TZ=Europe/London
           - URL={{ domain_name }}
-          - SUBDOMAINS=www,
           - VALIDATION=http
           - EMAIL={{ acme_email }} #optional
           - DHLEVEL=2048 #optional
