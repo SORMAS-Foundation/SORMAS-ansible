@@ -1,7 +1,7 @@
 - name: Insert/Update "Match User" configuration block in /etc/ssh/sshd_config
   blockinfile:
     path: /root/sormas-docker/docker-compose.yml
-    block: |
+    block: |2
   letsencrypt:
     image: linuxserver/letsencrypt
     container_name: letsencrypt
