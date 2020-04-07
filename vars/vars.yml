@@ -1,7 +1,12 @@
 ### Sormas variables ###
 
+# Sormas version to install
+# master checks out the master branch
+# Other available versions at https://github.com/hzi-braunschweig/SORMAS-Docker/releases
+sormas_version: master
+
 # Domain and url of the application
-domain_name: test-ubuntu.sormas.test.box
+domain_name: yourdomain.example.com
 
 # The default values for the map section
 latitude: 0

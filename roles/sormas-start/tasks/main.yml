@@ -1,0 +1,5 @@
+    
+- name: Run docker-compose
+  docker_compose:
+    project_src: /root/sormas-docker
+    pull: yes
