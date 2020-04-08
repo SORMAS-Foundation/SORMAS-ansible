@@ -42,14 +42,14 @@
   openssl_privatekey:
     path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.key'
     select_crypto_backend: cryptography
-  when: selfsigned_cert_generation
+  when: selfsigned_cert_generation and not use_letsencrypt
 
 - name: Generate an OpenSSL Certificate Signing Request
   openssl_csr:
     path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.csr'
     privatekey_path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.key'
     common_name: '{{ domain_name }}'
-  when: selfsigned_cert_generation    
+  when: selfsigned_cert_generation and not use_letsencrypt
   
 - name: Generate a Self Signed OpenSSL certificate
   openssl_certificate:
@@ -57,4 +57,4 @@
     privatekey_path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.key'
     csr_path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.csr'
     provider: selfsigned
-  when: selfsigned_cert_generation
+  when: selfsigned_cert_generation and not use_letsencrypt

@@ -1,19 +1,36 @@
     
-- name: Run docker-compose
+- name: Run docker-compose with letsencrypt service
   docker_compose:
     project_src: /root/sormas-docker
     pull: yes
+    services:
+      - postgres
+      - sormas
+      - letsencrypt
+  when: use_letsencrypt and not selfsigned_cert_generation
+
+- name: Run docker-compose with apache2 service
+  docker_compose:
+    project_src: /root/sormas-docker
+    pull: yes
+    services:
+      - postgres
+      - sormas
+      - apache2
+  when: selfsigned_cert_generation and not use_letsencrypt
 
 - name: Copy host.conf.j2 to LetsEncrypt volume
   template:
     src: host.conf.j2
     dest: '/var/lib/docker/letsencrypt-config/nginx/proxy-confs/{{ domain_name }}.conf'
+  when: use_letsencrypt and not selfsigned_cert_generation
 
 - name: Include new config to default config
   lineinfile:
     path: '/var/lib/docker/letsencrypt-config/nginx/site-confs/default'
     regexp: '^include /config/nginx/proxy-confs/'
     line: 'include /config/nginx/proxy-confs/{{ domain_name }}.conf;'
+  when: use_letsencrypt and not selfsigned_cert_generation
 
 - name: Restart letsencrypt service to apply changes
   docker_compose:
@@ -21,9 +38,11 @@
     services: letsencrypt
     state: present
     restarted: yes
+  when: use_letsencrypt and not selfsigned_cert_generation
 
 - name: Create pem file
   shell: docker-compose exec letsencrypt /bin/sh -c "openssl dhparam -out /dockerconfig/nginx/dhparams.pem 2048"
   args:
     chdir: /root/sormas-docker
+  when: use_letsencrypt and not selfsigned_cert_generation
     

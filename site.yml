@@ -3,8 +3,10 @@
   become: yes
   vars_files:
     - vars/vars.yml
+    
   roles:
     - geerlingguy.docker
     - geerlingguy.pip
-    - { role: "letsencrypt", when: use_letsencrypt }    
-    - sormas-installation
+    - sormas-installation    
+    - { role: "letsencrypt", when: use_letsencrypt and not selfsigned_cert_generation }    
+    - sormas-start

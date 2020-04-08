@@ -37,7 +37,7 @@ docker_users: []
 
 # Use of LetsEncrypt container on the same host (will issue and renew letsencrypt certificate for your domain) that will act as a reverse proxy.
 use_letsencrypt: true
-# If your sormas server is behind a reverse proxy or if you use the LetsEncrypt container set this to true.
+# If your sormas server is behind a existing reverse proxy, set this to true.
 selfsigned_cert_generation: true
 # Email-address for LetsEncrypt
 acme_email: root@localhost
