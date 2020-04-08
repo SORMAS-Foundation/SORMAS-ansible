@@ -41,7 +41,7 @@
   when: use_letsencrypt and not selfsigned_cert_generation
 
 - name: Create pem file
-  shell: docker-compose exec letsencrypt /bin/sh -c "openssl dhparam -out /dockerconfig/nginx/dhparams.pem 2048"
+  shell: docker-compose exec letsencrypt /bin/sh -c "openssl dhparam -out /config/nginx/dhparams.pem 2048"
   args:
     chdir: /root/sormas-docker
   when: use_letsencrypt and not selfsigned_cert_generation
