@@ -34,9 +34,10 @@ server {
 #    access_log  /config/log/nginx/access.log  main;
 #    error_log   /config/log/nginx/error.log crit;
 
-    location ~ "^(/(?!downloads).*)" {
-        rewrite ^(.*)$ https://{{ domain_name }}/sormas-ui\$1 redirect;
-    }
+# Funktioniert noch nicht:    
+#    location ~ "^(/(?!downloads).*)" {
+#        rewrite ^(.*)$ https://{{ domain_name }}/sormas-ui\$1 redirect;
+#    }
 
     location /sormas-ui {
         proxy_pass http://sormas:6080/sormas-ui;
