@@ -39,6 +39,14 @@ server {
 #        rewrite ^(.*)$ https://{{ domain_name }}/sormas-ui\$1 redirect;
 #    }
 
+# AliasMatch "/downloads/sormas-(.*)" "/var/www/sormas/downloads/sormas-\$1"
+
+#    location ~ "/downloads/sormas-(.*)" {
+#        alias /config/www/sormas/downloads/sormas-\$1;
+#        root /config/www/sormas/;
+#        autoindex on;
+#    }
+
     location /sormas-ui {
         proxy_pass http://sormas:6080/sormas-ui;
         proxy_set_header X-Forwarded-Host $host:$server_port;
@@ -53,5 +61,9 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;        
     }
 
-    # TODO downloads folder integration
+    location /downloads {
+        root /config/www/sormas/;
+        autoindex on;
+    }    
+
   }

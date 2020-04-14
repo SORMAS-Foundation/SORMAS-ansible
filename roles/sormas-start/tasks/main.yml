@@ -6,6 +6,7 @@
     services:
       - postgres
       - sormas
+      - pg_dump
       - letsencrypt
   when: use_letsencrypt and not selfsigned_cert_generation
 
@@ -16,6 +17,7 @@
     services:
       - postgres
       - sormas
+      - pg_dump
       - apache2
   when: selfsigned_cert_generation and not use_letsencrypt
 
@@ -32,6 +34,21 @@
     line: 'include /config/nginx/proxy-confs/{{ domain_name }}.conf;'
   when: use_letsencrypt and not selfsigned_cert_generation
 
+- name: Copy selfsigned certificate to letsencrypt folder
+  copy:
+    remote_src: yes
+    src: '/root/sormas-docker/apache2/certs/{{ domain_name }}.crt'
+    dest: '/var/lib/docker/letsencrypt-config/keys/letsencrypt/fullchain.pem'
+  when: selfsigned_cert_generation and not use_letsencrypt    
+
+- name: Copy selfsigned private key to letsencrypt folder
+  copy:
+    remote_src: yes
+    src: '/root/sormas-docker/apache2/certs/{{ domain_name }}.key'
+    dest: '/var/lib/docker/letsencrypt-config/keys/letsencrypt/privkey.pem'
+    mode: '0600'
+  when: selfsigned_cert_generation and not use_letsencrypt    
+
 - name: Restart letsencrypt service to apply changes
   docker_compose:
     project_src: /root/sormas-docker
@@ -40,9 +57,13 @@
     restarted: yes
   when: use_letsencrypt and not selfsigned_cert_generation
 
+- name: Ansible check file exists.
+  stat:
+    path: /config/nginx/dhparams.pem
+  register: file_details  
+
 - name: Create pem file
   shell: docker-compose exec letsencrypt /bin/sh -c "openssl dhparam -out /config/nginx/dhparams.pem 2048"
   args:
     chdir: /root/sormas-docker
-  when: use_letsencrypt and not selfsigned_cert_generation
-    
+  when: use_letsencrypt and not selfsigned_cert_generation and not file_details.stat.exists
