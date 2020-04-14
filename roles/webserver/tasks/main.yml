@@ -34,11 +34,14 @@
 
 - name: Create letsencrypt directories to copy certificates
   file:
-    path: '/var/lib/docker/letsencrypt-config/keys/letsencrypt'
+    path: '{{ item }}'
     state: directory
   when: selfsigned_cert_generation or use_existing_certs
+  with_items:
+    - '/var/lib/docker/letsencrypt-config/keys/letsencrypt'
+    - '/var/lib/docker/letsencrypt-config/etc/letsencrypt/live/{{ domain_name }}'
 
-- name: Copy existing pem files into correct folder
+- name: Copy existing pem files into letsencrypt folder
   copy:
     src: '{{ item }}.pem'
     dest: '/var/lib/docker/letsencrypt-config/keys/letsencrypt/{{ item }}.pem'

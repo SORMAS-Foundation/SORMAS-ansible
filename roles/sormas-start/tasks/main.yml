@@ -18,12 +18,12 @@
 - name: Copy pem files into correct folder
   copy:
     src: '/var/lib/docker/letsencrypt-config/keys/letsecrypt/{{ item }}.pem'
-    dest: '/var/lib/docker/letsencrypt-config/keys/letsecrypt/{{ domain_name }}/{{ item }}.pem'
+    dest: '/var/lib/docker/letsencrypt-config/etc/letsecrypt/live/{{ domain_name }}/{{ item }}.pem'
     remote_src: yes
   with_items:
     - fullchain
     - privkey
-  when: fullchain_details.exists and (use_existing_certs or selfsigned_cert_generation)
+  when: fullchain_details.stat.exists and (use_existing_certs or selfsigned_cert_generation)
 
 - name: Copy host.conf.j2 to LetsEncrypt volume
   template:
@@ -52,4 +52,4 @@
   shell: docker-compose exec letsencrypt /bin/sh -c "openssl dhparam -out /config/nginx/dhparams.pem 2048"
   args:
     chdir: /root/sormas-docker
-  when: not file_details.exists
+  when: not file_details.stat.exists
