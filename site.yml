@@ -8,5 +8,5 @@
     - geerlingguy.docker
     - geerlingguy.pip
     - sormas-installation    
-    - letsencrypt
+    - webserver
     - sormas-start
