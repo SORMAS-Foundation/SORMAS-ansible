@@ -38,23 +38,28 @@
     regexp: '^LONGITUDE='
     line: 'LONGITUDE={{ longitude }}'
 
+- name: Create letsencrypt directory to copy certificates
+  file:
+    path: /var/lib/docker/letsencrypt-config/keys/letsencrypt
+    state: directory    
+
 - name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
   openssl_privatekey:
-    path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.key'
+    path: '/var/lib/docker/letsencrypt-config/keys/letsencrypt/privkey.pem'
     select_crypto_backend: cryptography
   when: selfsigned_cert_generation and not use_letsencrypt
 
 - name: Generate an OpenSSL Certificate Signing Request
   openssl_csr:
-    path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.csr'
-    privatekey_path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.key'
+    path: '/var/lib/docker/letsencrypt-config/keys/letsencrypt/{{ domain_name }}.csr'
+    privatekey_path: '/var/lib/docker/letsencrypt-config/keys/letsencrypt/privkey.pem'
     common_name: '{{ domain_name }}'
   when: selfsigned_cert_generation and not use_letsencrypt
   
 - name: Generate a Self Signed OpenSSL certificate
   openssl_certificate:
-    path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.crt'
-    privatekey_path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.key'
-    csr_path: '/root/sormas-docker/apache2/certs/{{ domain_name }}.csr'
+    path: '/root/sormas-docker/apache2/certs/fullchaim.pem'
+    privatekey_path: '/var/lib/docker/letsencrypt-config/keys/letsencrypt/privkey.pem'
+    csr_path: /var/lib/docker/letsencrypt-config/keys/letsencrypt/{{ domain_name }}.csr'
     provider: selfsigned
   when: selfsigned_cert_generation and not use_letsencrypt
