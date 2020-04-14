@@ -42,20 +42,20 @@
   file:
     path: '/var/lib/docker/letsencrypt-config/keys/letsencrypt'
     state: directory
-  when: (selfsigned_cert_generation or use_existing_certs) and not use_letsencrypt    
+  when: selfsigned_cert_generation or use_existing_certs    
 
 - name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
   openssl_privatekey:
     path: '/var/lib/docker/letsencrypt-config/keys/letsencrypt/privkey.pem'
     select_crypto_backend: cryptography
-  when: selfsigned_cert_generationand not use_letsencrypt and not use_existing_certs
+  when: selfsigned_cert_generation
 
 - name: Generate an OpenSSL Certificate Signing Request
   openssl_csr:
     path: '/var/lib/docker/letsencrypt-config/keys/letsencrypt/{{ domain_name }}.csr'
     privatekey_path: '/var/lib/docker/letsencrypt-config/keys/letsencrypt/privkey.pem'
     common_name: '{{ domain_name }}'
-  when: selfsigned_cert_generation and not use_letsencrypt and not use_existing_certs
+  when: selfsigned_cert_generation
   
 - name: Generate a Self Signed OpenSSL certificate
   openssl_certificate:
@@ -63,4 +63,4 @@
     privatekey_path: '/var/lib/docker/letsencrypt-config/keys/letsencrypt/privkey.pem'
     csr_path: '/var/lib/docker/letsencrypt-config/keys/letsencrypt/{{ domain_name }}.csr'
     provider: selfsigned
-  when: selfsigned_cert_generation and not use_letsencrypt and not use_existing_certs
+  when: selfsigned_cert_generation
