@@ -17,8 +17,8 @@
 
 - name: Copy pem files into correct folder
   copy:
-    src: '/var/lib/docker/letsencrypt-config/keys/letsecrypt/{{ item }}.pem'
-    dest: '/var/lib/docker/letsencrypt-config/etc/letsecrypt/live/{{ domain_name }}/{{ item }}.pem'
+    src: '/var/lib/docker/letsencrypt-config/keys/letsencrypt/{{ item }}.pem'
+    dest: '/var/lib/docker/letsencrypt-config/etc/letsencrypt/live/{{ domain_name }}/{{ item }}.pem'
     remote_src: yes
   with_items:
     - fullchain
