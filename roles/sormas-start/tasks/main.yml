@@ -36,13 +36,6 @@
     regexp: '^include /config/nginx/proxy-confs/'
     line: 'include /config/nginx/proxy-confs/{{ domain_name }}.conf;'
 
-- name: Restart letsencrypt service to apply changes
-  docker_compose:
-    project_src: /root/sormas-docker
-    services: letsencrypt
-    state: present
-    restarted: yes
-
 - name: Check dhparams.pem exists.
   stat:
     path: /var/lib/docker/letsencrypt-config/nginx/dhparams.pem
