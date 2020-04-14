@@ -58,8 +58,8 @@
   
 - name: Generate a Self Signed OpenSSL certificate
   openssl_certificate:
-    path: '/root/sormas-docker/apache2/certs/fullchaim.pem'
+    path: '/var/lib/docker/letsencrypt-config/keys/letsencrypt/fullchain.pem'
     privatekey_path: '/var/lib/docker/letsencrypt-config/keys/letsencrypt/privkey.pem'
-    csr_path: /var/lib/docker/letsencrypt-config/keys/letsencrypt/{{ domain_name }}.csr'
+    csr_path: '/var/lib/docker/letsencrypt-config/keys/letsencrypt/{{ domain_name }}.csr'
     provider: selfsigned
   when: selfsigned_cert_generation and not use_letsencrypt
