@@ -9,6 +9,15 @@
 #      - pg_dump
       - letsencrypt
 
+- name: Copy pem files into correct folder
+  copy:
+    src: '/var/lib/docker/letsencrypt-config/keys/letsecrypt/{{ item }}.pem'
+    dest: '/var/lib/docker/letsencrypt-config/keys/letsecrypt/{{ domain_name }}/{{ item }}.pem'
+    remote_src: yes
+  with_items:
+    - fullchain
+    - privkey
+
 - name: Copy host.conf.j2 to LetsEncrypt volume
   template:
     src: host.conf.j2
