@@ -3,10 +3,30 @@
   become: yes
   vars_files:
     - vars/vars.yml
+
+  tasks:
+    - name: Fix problem , that pip3 won't be installed on ubuntu servers
+      apt:
+        name: python3-pip
+        state: present
+      when: ansible_distribution == 'Ubuntu'
     
-  roles:
-    - geerlingguy.docker
-    - geerlingguy.pip
-    - sormas-installation    
-    - webserver
-    - sormas-start
+    - name: Execute geerlingguy.docker
+      include_role:
+        name: geerlingguy.docker
+
+    - name: Execute geerlingguy.pip
+      include_role:
+        name: geerlingguy.pip
+
+    - name: Execute sormas-installation
+      include_role:
+        name: sormas-installation
+
+    - name: Execute webserver
+      include_role:
+        name: webserver
+        
+    - name: Execute sormas-start
+      include_role:
+        name: sormas-start
