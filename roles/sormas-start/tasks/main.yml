@@ -12,9 +12,8 @@
 - name: Check fullchain.pem exists.
   stat:
     path: /var/lib/docker/letsencrypt-config/nginx/dhparams.pem
-  register: fullchain_details.exists
+  register: fullchain_details
   when: use_existing_certs or selfsigned_cert_generation
-
 
 - name: Copy pem files into correct folder
   copy:
