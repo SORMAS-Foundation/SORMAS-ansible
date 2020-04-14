@@ -9,6 +9,11 @@
 #      - pg_dump
       - letsencrypt
 
+- name: Check fullchain.pem exists.
+  stat:
+    path: /var/lib/docker/letsencrypt-config/nginx/dhparams.pem
+  register: fullchain_details       
+
 - name: Copy pem files into correct folder
   copy:
     src: '/var/lib/docker/letsencrypt-config/keys/letsecrypt/{{ item }}.pem'
@@ -17,6 +22,7 @@
   with_items:
     - fullchain
     - privkey
+  when: fullchain_details.exists
 
 - name: Copy host.conf.j2 to LetsEncrypt volume
   template:
@@ -45,3 +51,4 @@
   shell: docker-compose exec letsencrypt /bin/sh -c "openssl dhparam -out /config/nginx/dhparams.pem 2048"
   args:
     chdir: /root/sormas-docker
+  when: selfsigned_cert_generation and not use_letsencrypt and not file_details.exists
