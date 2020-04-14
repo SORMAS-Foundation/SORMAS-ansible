@@ -41,7 +41,7 @@
 - name: Copy existing pem files into correct folder
   copy:
     src: '{{ item }}.pem'
-    dest: '/var/lib/docker/letsencrypt-config/keys/letsecrypt/{{ domain_name }}/{{ item }}.pem'
+    dest: '/var/lib/docker/letsencrypt-config/keys/letsecrypt/{{ item }}.pem'
   with_items:
     - fullchain
     - privkey
