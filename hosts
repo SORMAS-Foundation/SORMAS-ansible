@@ -1,2 +1,3 @@
 [sormas]
-192.168.122.158 ansible_ssh_user=akm
+10.240.41.10
+#127.0.0.1 ansible_connection=local

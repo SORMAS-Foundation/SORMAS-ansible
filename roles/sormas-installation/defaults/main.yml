@@ -1,3 +1,4 @@
 host_name: sormas.example.com
+sormas_version: master
 latitude: 0
 longitude: 0

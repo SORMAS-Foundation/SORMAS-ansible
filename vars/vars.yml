@@ -1,7 +1,12 @@
 ### Sormas variables ###
 
+# Sormas version to install
+# master checks out the master branch
+# Other available versions at https://github.com/hzi-braunschweig/SORMAS-Docker/releases
+sormas_version: master
+
 # Domain and url of the application
-domain_name: test-ubuntu.sormas.test.box
+domain_name: yourdomain.example.com
 
 # The default values for the map section
 latitude: 0
@@ -9,13 +14,15 @@ longitude: 0
 
 ### geerlingguy.pip variables ###
 
-pip_papackge: python-pip
-pip_executable: pip
+pip_papackge: python3-pip
+pip_executable: pip3
 pip_install_packages:
   - name: docker-compose
     version: "1.24"
   - name: cryptography
+    state: latest
   - name: pyopenssl
+    state: latest
 
 
 ### geerlingguy.docker variables ###
@@ -29,15 +36,14 @@ docker_users: []
 
 ### LetsEncrypt variables ###
 
-# Use of LetsEncrypt or not (mutually exclusive with selfsigned_cert_generation)
+# Use of certbot function in letsencrypt container
 use_letsencrypt: false
-# Ift your sormas server is behind a reverse proxy, set this to true (mutually exclusive with use_letsencrypt)
-selfsigned_cert_generation: true
+# If your sormas server is behind a existing reverse proxy, set this to true.
+selfsigned_cert_generation: false
+# if set to true, copy your existing certs to roles/letsencrypt/files/ with following naming
+# your certificate -> fullchain.pem
+# your private key -> privkey.pem
+use_existing_certs: true
 # Email-address for LetsEncrypt
+# IMPORTANT needs to be a correct and valid e-mail address!
 acme_email: root@localhost
-# Certification variables
-letsencrypt_dir: /root/sormas-docker/apache2/certs
-#letsencrypt_keys_dir: /root/sormas-docker/apache2/certs
-#letsencrypt_csrs_dir: /root/sormas-docker/apache2/certs
-#letsencrypt_certs_dir: /root/sormas-docker/apache2/certs
-letsencrypt_account_key: /root/sormas-docker/apache2/certs/account.key
