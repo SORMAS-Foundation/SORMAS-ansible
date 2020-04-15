@@ -8,6 +8,7 @@
       - sormas
 #      - pg_dump
       - letsencrypt
+  retries: 2
 
 - name: Check fullchain.pem exists.
   stat:

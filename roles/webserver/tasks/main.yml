@@ -53,8 +53,9 @@
 - name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
   openssl_privatekey:
     path: '/var/lib/docker/letsencrypt-config/keys/letsencrypt/privkey.pem'
-    select_crypto_backend: cryptography
+#    select_crypto_backend: cryptography
   when: selfsigned_cert_generation
+  retries: 2
 
 - name: Generate an OpenSSL Certificate Signing Request
   openssl_csr:
