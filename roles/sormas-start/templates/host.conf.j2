@@ -42,7 +42,6 @@ server {
 
     location ~ "/downloads/sormas-(.*)" {
         alias /config/www/sormas/downloads/sormas-\$1;
-        root /config/www/sormas/;
         autoindex on;
     }
 
