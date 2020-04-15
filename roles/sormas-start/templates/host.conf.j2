@@ -35,7 +35,7 @@ server {
     error_log   /config/log/nginx/error.log crit;
 
     location ~ "^(/(?!(downloads|sormas-ui)).*)" {
-        rewrite ^(.*)$ https://ubuntu16.sormas.netzlink.com/sormas-ui\$1 redirect;
+        rewrite ^(.*)$ https://{{ domain_name }}/sormas-ui\$1 redirect;
     }
 
 # AliasMatch "/downloads/sormas-(.*)" "/var/www/sormas/downloads/sormas-\$1"
