@@ -24,7 +24,7 @@
             - DHLEVEL=2048 #optional
             - ONLY_SUBDOMAINS=false #optional
             - STAGING=false #optional
-            - DISABLE_CERTBOT={{ use_existing_certs | lower }}
+            - DISABLE_CERTBOT='{{ "true" if use_existing_certs else "true" if selfsigned_cert_generation else "false" if use_letsencrypt }}'
           volumes:
             - /var/lib/docker/letsencrypt-config:/config
           ports:
