@@ -40,10 +40,10 @@ server {
 
 # AliasMatch "/downloads/sormas-(.*)" "/var/www/sormas/downloads/sormas-\$1"
 
-    location ~ "/downloads/sormas-(.*)" {
-        alias /config/www/sormas/downloads/sormas-\$1;
-        autoindex on;
-    }
+#    location ~ "/downloads/sormas-(.*)" {
+#        alias /config/www/sormas/downloads/sormas-\$1;
+#        autoindex on;
+#    }
 
     location /sormas-ui {
         proxy_pass http://sormas:6080/sormas-ui;
@@ -59,9 +59,9 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;        
     }
 
-#    location /downloads {
-#        root /config/www/sormas/;
-#        autoindex on;
-#    }    
+    location /downloads {
+        root /config/www/sormas/;
+        autoindex on;
+    }    
 
   }
