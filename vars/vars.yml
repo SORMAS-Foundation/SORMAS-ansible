@@ -14,8 +14,8 @@ longitude: 0
 
 ### geerlingguy.pip variables ###
 
-pip_papackge: python-pip
-pip_executable: pip
+pip_papackge: python3-pip
+pip_executable: pip3
 pip_install_packages:
   - name: docker-compose
     version: "1.24"
