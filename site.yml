@@ -10,14 +10,14 @@
         name: python3-pip
         state: present
       when: ansible_distribution == 'Ubuntu'
+
+    - name: Execute geerlingguy.pip
+      include_role:
+        name: geerlingguy.pip      
     
     - name: Execute geerlingguy.docker
       include_role:
         name: geerlingguy.docker
-
-    - name: Execute geerlingguy.pip
-      include_role:
-        name: geerlingguy.pip
 
     - name: Execute sormas-installation
       include_role:

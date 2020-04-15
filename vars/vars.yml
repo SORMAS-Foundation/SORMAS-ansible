@@ -22,6 +22,7 @@ pip_install_packages:
   - name: cryptography
     state: latest
   - name: pyopenssl
+    state: latest
 
 
 ### geerlingguy.docker variables ###
