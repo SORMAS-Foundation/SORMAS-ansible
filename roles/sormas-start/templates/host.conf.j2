@@ -31,13 +31,12 @@ server {
     add_header X-Content-Type-Options nosniff;
 
     
-#    access_log  /config/log/nginx/access.log  main;
-#    error_log   /config/log/nginx/error.log crit;
+    access_log  /config/log/nginx/access.log;
+    error_log   /config/log/nginx/error.log crit;
 
-# Funktioniert noch nicht:    
-#    location ~ "^(/(?!downloads).*)" {
-#        rewrite ^(.*)$ https://{{ domain_name }}/sormas-ui\$1 redirect;
-#    }
+    location ~ "^(/(?!(downloads|sormas-ui)).*)" {
+        rewrite ^(.*)$ https://ubuntu16.sormas.netzlink.com/sormas-ui\$1 redirect;
+    }
 
 # AliasMatch "/downloads/sormas-(.*)" "/var/www/sormas/downloads/sormas-\$1"
 
