@@ -2,9 +2,8 @@
 Allows you to install the dockerized version of sormas via ansible.
 
 Tested with following OS:<br>
-Ubuntu<br>
-Debian<br>
-CentOS<br>
+Ubuntu 16 LTS<br>
+Ubuntu 18 LTS<br>
 <br><br>
 ## Prequisites
 1. Change the remote_user inside the ansible.cfg to the user you want to execute the playbooks (make sure he has root privileges)
