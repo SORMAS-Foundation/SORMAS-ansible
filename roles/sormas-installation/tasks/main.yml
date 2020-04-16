@@ -11,7 +11,8 @@
   git:
       repo: "https://github.com/hzi-braunschweig/SORMAS-Docker.git"
       dest: /root/sormas-docker
-      version: "{{ sormas_version }}"
+#      version: "{{ sormas_version }}"
+      version: "v1.37.2"
       force: yes
 
 - name: Replace SORMAS_SERVER_URL in .env with correct domain
