@@ -33,7 +33,7 @@ selfsigned_cert_generation: true
 use_existing_certs: false
 ```
 ### Installation with existing certificate
-If you already have an existing certificate you want to use, place them inside the roles/webserver/files folder<br>
+If you already have an existing certificate you want to use, place them inside the roles/sormas-installation/files folder<br>
 Make sure you name your fullchain-certificate fullchain.pem and your private key privkey.pem<br>
 ```
 use_letsencrypt: false
