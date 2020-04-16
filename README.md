@@ -19,13 +19,11 @@ Depending on your current infrastructure, be sure to set the correct booleans un
 ### Installation with LetsEncrypt
 If you want to use LetsEncrypt to secure your SORMAS installation<br>
 <code>
-use_letsencrypt: true
-
+use_letsencrypt: true <br>
 selfsigned_cert_generation: false
-
 use_existing_certs: false
-
-acme_mail: <your@email> # Make sure you set this to a valid address, otherwise the certificate generation will fail!</code>
+acme_mail: <your@email> # Make sure you set this to a valid address, otherwise the certificate generation will fail!
+</code>
 ### Installation behind a existing reverse proxy
 The webserver will create selfsigned certificates to secure the connection between your existing reverse proxy and the webserver itself<br>
 This option can also be used, to test the installation on your local workstation / inside a LAN environment<br>
