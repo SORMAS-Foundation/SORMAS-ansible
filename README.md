@@ -40,6 +40,7 @@ use_letsencrypt: false
 selfsigned_cert_generation: false
 use_existing_certs: true
 ```
+---
 
 ### Known Problems
 Sometimes the sormas-container won't come up. This can be checked by look at the logs:
