@@ -22,11 +22,3 @@
     - name: Execute sormas-installation
       include_role:
         name: sormas-installation
-
-    - name: Execute webserver
-      include_role:
-        name: webserver
-        
-    - name: Execute sormas-start
-      include_role:
-        name: sormas-start
