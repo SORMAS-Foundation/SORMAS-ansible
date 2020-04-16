@@ -1,12 +1,3 @@
-- name: Remove port mapping for apache2
-  lineinfile:
-    path: /root/sormas-docker/docker-compose.yml
-    regexp: '"{{ item }}:{{ item }}"'
-    line: '      - {{ item }}'
-  with_items:
-    - 80
-    - 443 
-
 - name: Insert letsencrypt configuration block docker-compose.yml
   blockinfile:
     path: /root/sormas-docker/docker-compose.yml
@@ -20,10 +11,7 @@
             - TZ=Europe/London
             - URL={{ domain_name }}
             - VALIDATION=http
-            - EMAIL={{ acme_email }} #optional
-            - DHLEVEL=2048 #optional
-            - ONLY_SUBDOMAINS=false #optional
-            - STAGING=false #optional
+            - EMAIL={{ acme_email }}
             - DISABLE_CERTBOT='{{ "true" if use_existing_certs else "true" if selfsigned_cert_generation else "false" if use_letsencrypt }}'
           volumes:
             - /var/lib/docker/letsencrypt-config:/config
@@ -53,7 +41,6 @@
 - name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
   openssl_privatekey:
     path: '/var/lib/docker/letsencrypt-config/keys/letsencrypt/privkey.pem'
-#    select_crypto_backend: cryptography
   when: selfsigned_cert_generation
   retries: 2
 
