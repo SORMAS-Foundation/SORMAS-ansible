@@ -1,10 +1,5 @@
 ### Sormas variables ###
 
-# Sormas version to install
-# master checks out the master branch
-# Other available versions at https://github.com/hzi-braunschweig/SORMAS-Docker/releases
-sormas_version: master
-
 # Domain and url of the application
 domain_name: yourdomain.example.com
 
@@ -23,7 +18,6 @@ pip_install_packages:
     state: latest
   - name: pyopenssl
     state: latest
-
 
 ### geerlingguy.docker variables ###
 
