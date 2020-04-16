@@ -12,7 +12,7 @@
             - URL={{ domain_name }}
             - VALIDATION=http
             - EMAIL={{ acme_email }}
-            - DISABLE_CERTBOT='{{ "true" if use_existing_certs else "true" if selfsigned_cert_generation else "false" if use_letsencrypt }}'
+            - DISABLE_CERTBOT={{ "true" if use_existing_certs else "true" if selfsigned_cert_generation else "false" if use_letsencrypt }}
           volumes:
             - /var/lib/docker/letsencrypt-config:/config
           ports:
