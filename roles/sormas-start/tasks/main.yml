@@ -6,7 +6,7 @@
     services:
       - postgres
       - sormas
-#      - pg_dump
+      - pg_dump
       - letsencrypt
   retries: 2
 
