@@ -30,20 +30,12 @@ server {
     add_header Referrer-Policy no-referrer;
     add_header X-Content-Type-Options nosniff;
 
-    
     access_log  /config/log/nginx/access.log;
     error_log   /config/log/nginx/error.log crit;
 
     location ~ "^(/(?!(downloads|sormas-ui)).*)" {
         rewrite ^(.*)$ https://{{ domain_name }}/sormas-ui\$1 redirect;
     }
-
-# AliasMatch "/downloads/sormas-(.*)" "/var/www/sormas/downloads/sormas-\$1"
-
-#    location ~ "/downloads/sormas-(.*)" {
-#        alias /config/www/sormas/downloads/sormas-\$1;
-#        autoindex on;
-#    }
 
     location /sormas-ui {
         proxy_pass http://sormas:6080/sormas-ui;
@@ -62,6 +54,5 @@ server {
     location /downloads {
         root /config/www/sormas/;
         autoindex on;
-    }    
-
+    }
   }

@@ -11,7 +11,6 @@
   git:
       repo: "https://github.com/hzi-braunschweig/SORMAS-Docker.git"
       dest: /root/sormas-docker
-#      version: "{{ sormas_version }}"
       version: "v1.37.2"
       force: yes
 
@@ -38,3 +37,10 @@
     path: /root/sormas-docker/.env
     regexp: '^LONGITUDE='
     line: 'LONGITUDE={{ longitude }}'
+
+- name: Replace TZ in .env with correct timezone
+  lineinfile:
+    path: /root/sormas-docker/.env
+    regexp: '^TZ='
+    line: 'TZ={{ timezone }}'
+

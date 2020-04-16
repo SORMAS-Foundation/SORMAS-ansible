@@ -6,6 +6,8 @@ domain_name: yourdomain.example.com
 # The default values for the map section
 latitude: 0
 longitude: 0
+# Your timezone (https://nodatime.org/TimeZones)
+timezone: Europe/London
 
 ### geerlingguy.pip variables ###
 

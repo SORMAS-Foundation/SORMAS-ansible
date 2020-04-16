@@ -8,7 +8,7 @@
           environment:
             - PUID=1000
             - PGID=1000
-            - TZ=Europe/London
+            - TZ={{ timezone }}
             - URL={{ domain_name }}
             - VALIDATION=http
             - EMAIL={{ acme_email }}
