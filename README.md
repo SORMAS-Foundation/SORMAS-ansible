@@ -50,9 +50,6 @@ docker-compose logs -f sormas
 # If the logs stuck at
 Waiting for sormas DB to get ready ...
 # or at
-Command set executed successfully.
-Waiting for the domain to stop .
-Command stop-domain executed successfully.
 Server setup completed.
 ```
 Just restart the container
