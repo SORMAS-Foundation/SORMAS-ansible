@@ -14,7 +14,6 @@
   stat:
     path: /var/lib/docker/letsencrypt-config/nginx/dhparams.pem
   register: fullchain_details
-  when: use_existing_certs or selfsigned_cert_generation
 
 - name: Copy pem files into correct folder
   copy:
@@ -36,14 +35,3 @@
     path: '/var/lib/docker/letsencrypt-config/nginx/site-confs/default'
     regexp: '^include /config/nginx/proxy-confs/'
     line: 'include /config/nginx/proxy-confs/{{ domain_name }}.conf;'
-
-- name: Check dhparams.pem exists.
-  stat:
-    path: /var/lib/docker/letsencrypt-config/nginx/dhparams.pem
-  register: file_details
-
-- name: Create pem file
-  shell: docker-compose exec letsencrypt /bin/sh -c "openssl dhparam -out /config/nginx/dhparams.pem 2048"
-  args:
-    chdir: /root/sormas-docker
-  when: not file_details.stat.exists
