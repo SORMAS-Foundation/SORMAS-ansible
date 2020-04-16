@@ -19,7 +19,7 @@ Depending on your current infrastructure, be sure to set the correct booleans un
 ### Installation with LetsEncrypt
 If you want to use LetsEncrypt to secure your SORMAS installation<br>
 <code>
-use_letsencrypt: true <br>
+use_letsencrypt: true \n
 selfsigned_cert_generation: false
 use_existing_certs: false
 acme_mail: <your@email> # Make sure you set this to a valid address, otherwise the certificate generation will fail!
