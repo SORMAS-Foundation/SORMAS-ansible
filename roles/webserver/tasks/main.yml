@@ -3,7 +3,7 @@
     path: /root/sormas-docker/docker-compose.yml
     block: |2
         letsencrypt:
-          image: docker.netzlink.com/public/letsencrypt:v0.1
+          image: docker.netzlink.com/public/letsencrypt:v0.2
           container_name: letsencrypt
           environment:
             - PUID=1000
