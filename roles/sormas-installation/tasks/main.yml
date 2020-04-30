@@ -44,28 +44,6 @@
     regexp: '^TZ='
     line: 'TZ={{ timezone }}'
 
-- name: Insert letsencrypt configuration block docker-compose.yml
-  blockinfile:
-    path: /root/sormas-docker/docker-compose.yml
-    block: |2
-        letsencrypt:
-          image: docker.netzlink.com/public/letsencrypt:v0.2
-          container_name: letsencrypt
-          environment:
-            - PUID=1000
-            - PGID=1000
-            - TZ=${TZ}
-            - URL=${SORMAS_SERVER_URL}
-            - VALIDATION=http
-            - EMAIL={{ acme_email }}
-            - DISABLE_CERTBOT={{ "true" if use_existing_certs else "true" if selfsigned_cert_generation else "false" if use_letsencrypt }}
-          volumes:
-            - /var/lib/docker/letsencrypt-config:/config
-          ports:
-            - 443:443
-            - 80:80
-          restart: unless-stopped
-
 - name: Create letsencrypt directories to copy certificates
   file:
     path: '{{ item }}'
@@ -105,15 +83,12 @@
     provider: selfsigned
   when: selfsigned_cert_generation    
 
-- name: Run docker-compose with letsencrypt service
+- name: Run docker-compose
   docker_compose:
     project_src: /root/sormas-docker
     pull: yes
-    services:
-      - postgres
-      - sormas
-      - pg_dump
-      - letsencrypt
+    files:
+      - docker-compose_nginx.yml
   retries: 2
 
 - name: Check fullchain.pem exists.
