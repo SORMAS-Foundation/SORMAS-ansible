@@ -44,6 +44,12 @@
     regexp: '^TZ='
     line: 'TZ={{ timezone }}'
 
+- name: Replace DISABLE_CERTBOT in .env with correct boolean
+  lineinfile:
+    path: /root/sormas-docker/.env
+    regexp: '^DISABLE_CERTBOT='
+    line: 'DISABLE_CERTBOT={{ selfsigned_cert_generation }}'    
+
 - name: Create letsencrypt directories to copy certificates
   file:
     path: '{{ item }}'
