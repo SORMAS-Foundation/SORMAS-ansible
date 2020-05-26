@@ -54,7 +54,6 @@
   lineinfile:
     path: /root/sormas-docker/.env
     regexp: '^DISABLE_CERTBOT='
-    {% if use_letsencrypt %}false{% elif selfsigned_cert_generation %}true
     line: 'DISABLE_CERTBOT={{ "false" if use_letsencrypt else "true" }}'      
     
 - name: Create letsencrypt directories to copy certificates
