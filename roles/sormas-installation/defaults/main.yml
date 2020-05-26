@@ -1,5 +1,5 @@
 host_name: sormas.example.com
-SORMAS_DOCKER_VERSION: v2.1.1
+SORMAS_DOCKER_VERSION: master
 sormas_version: master
 latitude: 0
 longitude: 0
