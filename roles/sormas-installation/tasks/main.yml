@@ -48,7 +48,7 @@
   lineinfile:
     path: /root/sormas-docker/.env
     regexp: '^LETSENCRYPT_MAIL='
-    line: 'LETSENCRYPT_MAIL={{ acme_mail }}'
+    line: 'LETSENCRYPT_MAIL={{ acme_email }}'
     
 - name: Set value for DISABLE_CERTBOT
   lineinfile:
