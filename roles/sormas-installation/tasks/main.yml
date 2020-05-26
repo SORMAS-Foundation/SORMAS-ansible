@@ -43,7 +43,19 @@
     path: /root/sormas-docker/.env
     regexp: '^TZ='
     line: 'TZ={{ timezone }}'
-
+    
+- name: Replace acme_mail in .env with correct email
+  lineinfile:
+    path: /root/sormas-docker/.env
+    regexp: '^LETSENCRYPT_MAIL='
+    line: 'LETSENCRYPT_MAIL={{ acme_mail }}'
+    
+- name: Set value for DISABLE_CERTBOT
+  lineinfile:
+    path: /root/sormas-docker/.env
+    regexp: '^DISABLE_CERTBOT='
+    line: 'DISABLE_CERTBOT={{ "true" if use_existing_certs else "true" if selfsigned_cert_generation else "false" if use_letsencrypt }}'      
+    
 - name: Create letsencrypt directories to copy certificates
   file:
     path: '{{ item }}'
