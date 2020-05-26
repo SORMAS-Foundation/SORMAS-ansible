@@ -11,7 +11,7 @@
   git:
       repo: "https://github.com/hzi-braunschweig/SORMAS-Docker.git"
       dest: /root/sormas-docker
-      version: "v1.37.2"
+      version: "{{ SORMAS_DOCKER_VERSION }}"
       force: yes
 
 - name: Replace SORMAS_SERVER_URL in .env with correct domain
@@ -43,28 +43,6 @@
     path: /root/sormas-docker/.env
     regexp: '^TZ='
     line: 'TZ={{ timezone }}'
-
-- name: Insert letsencrypt configuration block docker-compose.yml
-  blockinfile:
-    path: /root/sormas-docker/docker-compose.yml
-    block: |2
-        letsencrypt:
-          image: docker.netzlink.com/public/letsencrypt:v0.2
-          container_name: letsencrypt
-          environment:
-            - PUID=1000
-            - PGID=1000
-            - TZ=${TZ}
-            - URL=${SORMAS_SERVER_URL}
-            - VALIDATION=http
-            - EMAIL={{ acme_email }}
-            - DISABLE_CERTBOT={{ "true" if use_existing_certs else "true" if selfsigned_cert_generation else "false" if use_letsencrypt }}
-          volumes:
-            - /var/lib/docker/letsencrypt-config:/config
-          ports:
-            - 443:443
-            - 80:80
-          restart: unless-stopped
 
 - name: Create letsencrypt directories to copy certificates
   file:
@@ -108,12 +86,8 @@
 - name: Run docker-compose with letsencrypt service
   docker_compose:
     project_src: /root/sormas-docker
+    files: docker-compose_nginx.yml
     pull: yes
-    services:
-      - postgres
-      - sormas
-      - pg_dump
-      - letsencrypt
   retries: 2
 
 - name: Check fullchain.pem exists.
