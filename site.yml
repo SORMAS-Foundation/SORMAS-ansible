@@ -14,7 +14,7 @@
     - name: Execute geerlingguy.epel
       include_role:
         name: geerlingguy.epel      
-      when: ansible_os_family == 'Redhat' or ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+      when: ansible_os_family == 'RedHat' or ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
       
     - name: Execute geerlingguy.pip
       include_role:
