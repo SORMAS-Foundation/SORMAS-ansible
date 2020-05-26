@@ -3,6 +3,9 @@
 # Domain and url of the application
 domain_name: yourdomain.example.com
 
+# Release version of SORMAS-Docker https://github.com/hzi-braunschweig/SORMAS-Docker/releases 
+SORMAS_DOCKER_VERSION: v2.1.1
+
 # The default values for the map section
 latitude: 0
 longitude: 0
